@@ -1,0 +1,62 @@
+from auto import Auto
+autok: list[Auto] = []
+file = open('autok.csv', 'r', encoding='utf-8')
+file.readline()
+for row in file:
+    autok.append(Auto(row))
+
+file.close()
+
+print(f'2. feladat: A fájlban {len(autok)} autó szerepel.')
+
+db = 0
+for a in autok:
+    if a.uzemanyag == 'Benzin':
+        db += 1
+print(f'3. feladat: A benzines autók aránya: {db / len(autok) * 100:.2f}%')
+
+legjobb = autok[0]
+for a in autok:
+    if a.ar * a.jutalek > legjobb.ar * legjobb.jutalek :
+        legjobb = a
+print(f'4. feladat: A legjobb jutalékot a {legjobb.tipus} esetén {legjobb.ar * legjobb.jutalek / 100} Ft-ot érhetek el. ')
+
+statisztika = {}
+for a in autok:
+    if a.evjarat in statisztika.keys():
+        statisztika[a.evjarat] += 1
+    else:
+        statisztika[a.evjarat] = 1
+print('5.feladat: Statisztika')
+for key,value in statisztika.items():
+    print(f'\t {key} - {value} db')
+
+file = open('olcso.txt', 'w', encoding='utf-8')
+for a in autok:
+    if a.ar < 8000000:
+        file.write(f'{a.tipus};{a.marka};{a.ar}\n')  
+file.close()  
+
+db2 = 0
+szin = input('7. feladat: Milyen színű autókat keresünk? ')
+for a in autok: 
+    if szin == a.szin:
+        db2 += 1
+        print(f'\t{a.tipus} {a.marka}: {a.ar}Ft')
+if db2 == 0:
+    print('Nincs ilyen színű autó.')
+
+
+
+class Auto:
+    def __init__(self, row) -> None:
+        splittedData = row.strip().split(';')
+        self.tipus = splittedData[0]
+        self.marka = splittedData[1]
+        self.evjarat = int(splittedData[2])
+        self.ar = int(splittedData[3])
+        self.uzemanyag = splittedData[4]
+        self.szin = splittedData[5]
+        self.jutalek = float(splittedData[6].replace(',','.'))
+
+    

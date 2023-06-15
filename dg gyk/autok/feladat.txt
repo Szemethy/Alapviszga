@@ -1,0 +1,6 @@
+1. olvassuk be, tároljuk el
+2. Hány autó van a listán? 
+3. Hány %-a benzines?
+4. Melyik autó után érem el a legmagasabb jutalékot?  
+5. statisztika az évjáratokról
+6. Írjon fájlt a 8.000.000 Ft alatti autókról olcso.txt néven.
